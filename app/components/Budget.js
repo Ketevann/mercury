@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 
 const Budget = () =>  {
-    return (
+    return(
       <div className="budget">
         <div className="expenses-btns">
           <Link to="/addexpenses">
