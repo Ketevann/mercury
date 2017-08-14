@@ -1,8 +1,8 @@
 
-const LOGIN = 'LOGIN'
-const SIGNUP = 'SIGNUP'
+export const LOGIN = 'LOGIN'
+export const SIGNUP = 'SIGNUP'
 
-export const Login = () => ({type: LOGIN})
+export const Login = () => ({type: 'LOGIN'})
 export const Signup = () => ({type: SIGNUP })
 
 
@@ -14,7 +14,7 @@ const inistialState = {
 
 
 
-const statuslReducer = (status=inistialState, action) => {
+const statusReducer = (status=inistialState, action) => {
 
   switch (action.type) {
   case LOGIN:
@@ -28,14 +28,5 @@ const statuslReducer = (status=inistialState, action) => {
   return status
 }
 
-export const boolSignUp = () =>
-  dispatch =>
-    dispatch(Signup())
 
-
-export const boolLogin = () =>
-dispatch =>
-    dispatch(Login())
-
-
-export default statuslReducer
+export default statusReducer

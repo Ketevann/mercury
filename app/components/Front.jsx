@@ -8,7 +8,6 @@ import Modal from './Modal'
 
 
 const Front = (props) => {
-  {console.log(props, 'prps')}
   return (
     <div className="homepage">
       <h2 className="tex header "> SPEND YOUR MONEY WISELY</h2>
@@ -22,6 +21,6 @@ const Front = (props) => {
 
 
 export default connect(
-  ({ modal }) => ({ modal: modal}),
+  ({ modal }) => ({modal: modal}),
   {modalShow},
 )(Front)

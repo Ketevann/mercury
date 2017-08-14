@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const initialState = {budget: null}
+const initialState = {budget: false}
 
-const CREATEBUDGET = 'CREATEBUDGET'
+export const CREATEBUDGET = 'CREATEBUDGET'
 
 
 const create = (budget) => ({type: CREATEBUDGET, budget})

@@ -44,15 +44,15 @@ class Navbar extends Component {
     //toggle; if the screen is medium/large navarbar is always inline-block
      if (store.getState().browser.is.small !== true && store.getState().browser.is.extraSmall !== true) divStyle.display = 'inline-block'
 
-      const iconStyle = {
-      display: displayStyle
-    };
+
     //if the screensize is small or extra small the menu icon is visible, otherwise it is hidden
     if (store.getState().browser.is.small === true || store.getState().browser.is.extraSmall === true) displayStyle = 'inline'
     else displayStyle = 'none'
 
 
-
+ const iconStyle = {
+      display: displayStyle
+    };
 
     return (
       <div className="container">

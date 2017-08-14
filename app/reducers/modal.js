@@ -5,12 +5,12 @@ const inistialState = {
   showModal: false,
 }
 
-const SHOWMODAL = 'SHOWMODAL'
-const HIDEMODAL = "HIDEMODAL"
+export const SHOWMODAL = 'SHOWMODAL'
+export const HIDEMODAL = "HIDEMODAL"
 
 
 /*            Action Creators               */
-export const modalShow = (modal) =>  ({type: SHOWMODAL, modal})
+export const modalShow = () =>  ({type: SHOWMODAL})
 export const modalHide = () => ({type: HIDEMODAL})
 
 
@@ -18,7 +18,6 @@ export const modalHide = () => ({type: HIDEMODAL})
 const modalReducer = (modal=inistialState, action) => {
   switch (action.type) {
   case SHOWMODAL:
-
     return Object.assign({}, modal, {showModal: true})
 
   case HIDEMODAL:
@@ -29,14 +28,6 @@ const modalReducer = (modal=inistialState, action) => {
 }
 
 /*            Dispatcher               */
-export const showModal = () =>
-  dispatch =>
-    dispatch(modalShow())
-
-
-export const hideModal = () =>
-  dispatch =>
-    dispatch(modalHide())
 
 
 export default modalReducer

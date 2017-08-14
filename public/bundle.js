@@ -932,29 +932,6 @@ module.exports = invariant;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-exports.__esModule = true;
-exports.connect = exports.Provider = undefined;
-
-var _Provider = __webpack_require__(628);
-
-var _Provider2 = _interopRequireDefault(_Provider);
-
-var _connect = __webpack_require__(629);
-
-var _connect2 = _interopRequireDefault(_connect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-exports.Provider = _Provider2["default"];
-exports.connect = _connect2["default"];
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -1334,6 +1311,29 @@ var ReactComponentTreeHook = {
 
 module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.connect = exports.Provider = undefined;
+
+var _Provider = __webpack_require__(628);
+
+var _Provider2 = _interopRequireDefault(_Provider);
+
+var _connect = __webpack_require__(629);
+
+var _connect2 = _interopRequireDefault(_connect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+exports.Provider = _Provider2["default"];
+exports.connect = _connect2["default"];
 
 /***/ }),
 /* 12 */
@@ -1754,6 +1754,13 @@ module.exports = { debugTool: debugTool };
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports) {
+
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1762,13 +1769,15 @@ module.exports = { debugTool: debugTool };
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.whoami = exports.logout = exports.signup = exports.login = exports.authenticated = undefined;
+exports.whoami = exports.logout = exports.signup = exports.login = exports.authenticated = exports.AUTHENTICATED = undefined;
 
 var _axios = __webpack_require__(42);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AUTHENTICATED = exports.AUTHENTICATED = 'AUTHENTICATED';
 
 var inistialState = {
   clicked: true
@@ -1779,23 +1788,22 @@ var reducer = function reducer() {
 
   switch (action.type) {
     case AUTHENTICATED:
-
+      console.log(action.user, ' user');
       return action.user;
   }
   return state;
 };
 
-var AUTHENTICATED = 'AUTHENTICATED';
 var authenticated = exports.authenticated = function authenticated(user) {
-  return {
-    type: AUTHENTICATED, user: user
-  };
+  console.log('user is null!!!!!');
+  return { type: AUTHENTICATED, user: user };
 };
 
 var login = exports.login = function login(email, password) {
+  console.log('loglog');
   return function (dispatch) {
     return _axios2.default.post('/api/auth/login/local', { email: email, password: password }).then(function () {
-      return dispatch(whoami());
+      return dispatch(authenticated());
     }).catch(function () {
       return dispatch(whoami());
     });
@@ -1823,9 +1831,12 @@ var logout = exports.logout = function logout() {
 };
 
 var whoami = exports.whoami = function whoami() {
+
   return function (dispatch) {
     return _axios2.default.get('/api/auth/whoami').then(function (response) {
-      var user = response.data;
+      var user;
+      console.log("888", response);
+      if (response.data === 'unsuccessful') user = null;else user = response.data;
       dispatch(authenticated(user));
     }).catch(function (failed) {
       return dispatch(authenticated(null));
@@ -1834,13 +1845,6 @@ var whoami = exports.whoami = function whoami() {
 };
 
 exports.default = reducer;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ }),
 /* 18 */
@@ -15338,7 +15342,7 @@ var _reduxThunk = __webpack_require__(671);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _plaid = __webpack_require__(51);
 
@@ -16095,7 +16099,7 @@ module.exports = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(33)
-  , core      = __webpack_require__(17)
+  , core      = __webpack_require__(16)
   , ctx       = __webpack_require__(172)
   , hide      = __webpack_require__(54)
   , PROTOTYPE = 'prototype';
@@ -17056,13 +17060,13 @@ module.exports = __webpack_require__(551);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hideModal = exports.showModal = exports.modalHide = exports.modalShow = undefined;
+exports.modalHide = exports.modalShow = exports.HIDEMODAL = exports.SHOWMODAL = undefined;
 
 var _axios = __webpack_require__(42);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17070,12 +17074,12 @@ var inistialState = {
   showModal: false
 };
 
-var SHOWMODAL = 'SHOWMODAL';
-var HIDEMODAL = "HIDEMODAL";
+var SHOWMODAL = exports.SHOWMODAL = 'SHOWMODAL';
+var HIDEMODAL = exports.HIDEMODAL = "HIDEMODAL";
 
 /*            Action Creators               */
-var modalShow = exports.modalShow = function modalShow(modal) {
-  return { type: SHOWMODAL, modal: modal };
+var modalShow = exports.modalShow = function modalShow() {
+  return { type: SHOWMODAL };
 };
 var modalHide = exports.modalHide = function modalHide() {
   return { type: HIDEMODAL };
@@ -17088,7 +17092,6 @@ var modalReducer = function modalReducer() {
 
   switch (action.type) {
     case SHOWMODAL:
-
       return Object.assign({}, modal, { showModal: true });
 
     case HIDEMODAL:
@@ -17099,17 +17102,6 @@ var modalReducer = function modalReducer() {
 };
 
 /*            Dispatcher               */
-var showModal = exports.showModal = function showModal() {
-  return function (dispatch) {
-    return dispatch(modalShow());
-  };
-};
-
-var hideModal = exports.hideModal = function hideModal() {
-  return function (dispatch) {
-    return dispatch(modalHide());
-  };
-};
 
 exports.default = modalReducer;
 
@@ -20563,7 +20555,7 @@ if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userExpenses = exports.budgetCreate = undefined;
+exports.userExpenses = exports.budgetCreate = exports.CREATEBUDGET = undefined;
 
 var _axios = __webpack_require__(42);
 
@@ -20571,9 +20563,9 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var initialState = { budget: null };
+var initialState = { budget: false };
 
-var CREATEBUDGET = 'CREATEBUDGET';
+var CREATEBUDGET = exports.CREATEBUDGET = 'CREATEBUDGET';
 
 var create = function create(budget) {
   return { type: CREATEBUDGET, budget: budget };
@@ -21075,7 +21067,7 @@ module.exports = function(it, S){
 /***/ (function(module, exports, __webpack_require__) {
 
 var global         = __webpack_require__(33)
-  , core           = __webpack_require__(17)
+  , core           = __webpack_require__(16)
   , LIBRARY        = __webpack_require__(103)
   , wksExt         = __webpack_require__(112)
   , defineProperty = __webpack_require__(45).f;
@@ -24913,7 +24905,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _budget = __webpack_require__(95);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25105,59 +25097,42 @@ exports.default = (0, _reactRedux.connect)(null, { budgetCreate: _budget.budgetC
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// import React from 'react'
 
+// export const Login = ({ login, signup }) => (
+// <div>
+//   <form onSubmit={evt => {
+//     evt.preventDefault()
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Login = undefined;
+//     login(evt.target.email.value, evt.target.password.value)
+//   } }>
+//     <input name="email" />
+//     <input name="password" type="password" />
+//     <input type="submit" value="Login" />
+//   </form>
+//   <form onSubmit={evt => {
+//     evt.preventDefault()
 
-var _react = __webpack_require__(1);
+//     signup(evt.target.email.value, evt.target.password.value, evt.target.name.value)
+//   } }>
+//     <input name="name" />
+//     <input name="email" />
+//     <input name="password" type="password" />
+//     <input type="submit" value="Login" />
+//   </form>
+//       <br/>
 
-var _react2 = _interopRequireDefault(_react);
+// </div>
+// )
 
-var _auth = __webpack_require__(16);
+// import {login, signup, thirdPartyLogin} from 'APP/app/reducers/auth'
+// import {connect} from 'react-redux'
 
-var _reactRedux = __webpack_require__(10);
+// export default connect(
+//   state => ({}),
+//   {login},
+// )(Login)
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Login = exports.Login = function Login(_ref) {
-  var login = _ref.login,
-      signup = _ref.signup;
-  return _react2.default.createElement(
-    "div",
-    null,
-    _react2.default.createElement(
-      "form",
-      { onSubmit: function onSubmit(evt) {
-          evt.preventDefault();
-
-          login(evt.target.email.value, evt.target.password.value);
-        } },
-      _react2.default.createElement("input", { name: "email" }),
-      _react2.default.createElement("input", { name: "password", type: "password" }),
-      _react2.default.createElement("input", { type: "submit", value: "Login" })
-    ),
-    _react2.default.createElement(
-      "form",
-      { onSubmit: function onSubmit(evt) {
-          evt.preventDefault();
-
-          signup(evt.target.email.value, evt.target.password.value, evt.target.name.value);
-        } },
-      _react2.default.createElement("input", { name: "name" }),
-      _react2.default.createElement("input", { name: "email" }),
-      _react2.default.createElement("input", { name: "password", type: "password" }),
-      _react2.default.createElement("input", { type: "submit", value: "Login" })
-    ),
-    _react2.default.createElement("br", null)
-  );
-};
-
-exports.default = (0, _reactRedux.connect)(function (state) {
-  return {};
-}, { login: _auth.login })(Login);
 
 /***/ }),
 /* 160 */
@@ -25498,9 +25473,9 @@ var _modal = __webpack_require__(64);
 
 var _login = __webpack_require__(168);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _LoginForm = __webpack_require__(316);
 
@@ -25526,34 +25501,33 @@ var Modal = function (_React$Component) {
   _inherits(Modal, _React$Component);
 
   function Modal() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Modal);
 
-    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.handleClick = function () {
-      return _this.props.showModal();
-    };
-
-    _this.handleClose = function () {
-      return _this.props.hideModal();
-    };
-
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
-    return _this;
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Modal.__proto__ || Object.getPrototypeOf(Modal)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function () {
+      return _store2.default.dispatch((0, _modal.modalShow)());
+    }, _this.handleClose = function () {
+      return _store2.default.dispatch((0, _modal.modalHide)());
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Modal, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(evt) {
-      evt.preventDefault();
-      this.props.newPassowrd({ email: evt.target.email.value, password: evt.target.password.value });
-      this.handleClose();
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var login = this.props.status.login;
+
+      {
+        console.log(this.props, 'props');
+      }
       return _react2.default.createElement(
         'div',
         { className: 'modal', onClick: this.handleClick },
@@ -25566,7 +25540,7 @@ var Modal = function (_React$Component) {
             _react2.default.createElement('div', { className: 'clear' }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
-            this.props.status.login === true ? _react2.default.createElement(
+            this.props.status.login ? _react2.default.createElement(
               'div',
               null,
               _react2.default.createElement(
@@ -25576,7 +25550,7 @@ var Modal = function (_React$Component) {
                 _react2.default.createElement(
                   'a',
                   { onClick: function onClick() {
-                      return _this2.props.boolSignUp();
+                      return _store2.default.dispatch(_this2.props.Signup());
                     }, className: 'alignright' },
                   'Sign up'
                 )
@@ -25592,7 +25566,7 @@ var Modal = function (_React$Component) {
                 { clssName: 'clear' },
                 'Member Login'
               ),
-              _react2.default.createElement(_LoginForm2.default, { login: _auth.login })
+              _react2.default.createElement(_LoginForm2.default, { login: login })
             ) : _react2.default.createElement(
               'div',
               null,
@@ -25603,7 +25577,7 @@ var Modal = function (_React$Component) {
                 _react2.default.createElement(
                   'a',
                   { href: '#', onClick: function onClick() {
-                      return _this2.props.boolLogin();
+                      return _store2.default.dispatch(_this2.props.Login());
                     }, className: 'alignright' },
                   'Login'
                 )
@@ -25623,6 +25597,11 @@ var Modal = function (_React$Component) {
               _react2.default.createElement(_SignupForm2.default, null)
             ),
             _react2.default.createElement('br', null),
+            this.props.user === null ? _react2.default.createElement(
+              'div',
+              { style: { color: 'red' } },
+              'User Does not Exist'
+            ) : null,
             _react2.default.createElement(
               'a',
               { href: '/api/auth/login/google' },
@@ -25639,11 +25618,12 @@ var Modal = function (_React$Component) {
   return Modal;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(function (_ref) {
-  var modal = _ref.modal,
-      status = _ref.status;
-  return { modal: modal, status: status };
-}, { showModal: _modal.showModal, hideModal: _modal.hideModal, boolLogin: _login.boolLogin, boolSignUp: _login.boolSignUp })(Modal);
+exports.default = (0, _reactRedux.connect)(function (_ref2) {
+  var modal = _ref2.modal,
+      status = _ref2.status,
+      user = _ref2.user;
+  return { modal: modal, status: status, user: user };
+}, { modalShow: _modal.modalShow, modalHide: _modal.modalHide, Signup: _login.Signup, Login: _login.Login })(Modal);
 
 /***/ }),
 /* 167 */
@@ -25661,7 +25641,7 @@ var _axios = __webpack_require__(42);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25709,12 +25689,11 @@ exports.default = menuReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var LOGIN = 'LOGIN';
-var SIGNUP = 'SIGNUP';
+var LOGIN = exports.LOGIN = 'LOGIN';
+var SIGNUP = exports.SIGNUP = 'SIGNUP';
 
 var Login = exports.Login = function Login() {
-  return { type: LOGIN };
+  return { type: 'LOGIN' };
 };
 var Signup = exports.Signup = function Signup() {
   return { type: SIGNUP };
@@ -25725,7 +25704,7 @@ var inistialState = {
   login: true
 };
 
-var statuslReducer = function statuslReducer() {
+var statusReducer = function statusReducer() {
   var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : inistialState;
   var action = arguments[1];
 
@@ -25742,19 +25721,7 @@ var statuslReducer = function statuslReducer() {
   return status;
 };
 
-var boolSignUp = exports.boolSignUp = function boolSignUp() {
-  return function (dispatch) {
-    return dispatch(Signup());
-  };
-};
-
-var boolLogin = exports.boolLogin = function boolLogin() {
-  return function (dispatch) {
-    return dispatch(Login());
-  };
-};
-
-exports.default = statuslReducer;
+exports.default = statusReducer;
 
 /***/ }),
 /* 169 */
@@ -36730,7 +36697,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 var ReactCurrentOwner = __webpack_require__(19);
-var ReactComponentTreeHook = __webpack_require__(11);
+var ReactComponentTreeHook = __webpack_require__(10);
 var ReactElement = __webpack_require__(50);
 
 var checkReactTypeSpec = __webpack_require__(656);
@@ -37531,7 +37498,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _react = __webpack_require__(1);
 
@@ -37616,7 +37583,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _react = __webpack_require__(1);
 
@@ -37874,6 +37841,7 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Expenses = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -37883,13 +37851,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(20);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _plaid = __webpack_require__(51);
 
@@ -37927,7 +37895,7 @@ var categories = {
   transportation: ['Taxi', 'Cab', 'Subway', 'Travel', 'Transportation Centers', 'Tolls and Fees', 'Rail', 'Public Transportation Services', 'Parking', 'Car Service', 'Airlines and Aviation Services', 'Airports']
 };
 
-var Expenses = function (_Component) {
+var Expenses = exports.Expenses = function (_Component) {
   _inherits(Expenses, _Component);
 
   function Expenses(props) {
@@ -38008,9 +37976,6 @@ var Expenses = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      {
-        console.log(this.props, 'props');
-      }
       var _props = this.props,
           budget = _props.budget,
           modal = _props.modal,
@@ -38183,7 +38148,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _react = __webpack_require__(1);
 
@@ -38204,9 +38169,6 @@ var _Modal2 = _interopRequireDefault(_Modal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Front = function Front(props) {
-  {
-    console.log(props, 'prps');
-  }
   return _react2.default.createElement(
     'div',
     { className: 'homepage' },
@@ -38260,7 +38222,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(20);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _plaid = __webpack_require__(51);
 
@@ -38397,7 +38359,7 @@ var _Modal = __webpack_require__(166);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _modal = __webpack_require__(64);
 
@@ -38405,7 +38367,7 @@ var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _plaid = __webpack_require__(51);
 
@@ -38462,11 +38424,12 @@ var Navbar = function (_Component) {
       //toggle; if the screen is medium/large navarbar is always inline-block
       if (_store2.default.getState().browser.is.small !== true && _store2.default.getState().browser.is.extraSmall !== true) divStyle.display = 'inline-block';
 
+      //if the screensize is small or extra small the menu icon is visible, otherwise it is hidden
+      if (_store2.default.getState().browser.is.small === true || _store2.default.getState().browser.is.extraSmall === true) displayStyle = 'inline';else displayStyle = 'none';
+
       var iconStyle = {
         display: displayStyle
       };
-      //if the screensize is small or extra small the menu icon is visible, otherwise it is hidden
-      if (_store2.default.getState().browser.is.small === true || _store2.default.getState().browser.is.extraSmall === true) displayStyle = 'inline';else displayStyle = 'none';
 
       return _react2.default.createElement(
         'div',
@@ -38668,9 +38631,9 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52079,9 +52042,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactModalDialog = __webpack_require__(151);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _store = __webpack_require__(41);
 
@@ -52104,28 +52067,38 @@ var LoginForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.state = { logged: null };
+
     return _this;
   }
 
   _createClass(LoginForm, [{
     key: 'handleSubmit',
     value: function handleSubmit(evt) {
+      var _this2 = this;
+
+      console.log("here we areeee*********************************");
       evt.preventDefault();
-      this.props.login(evt.target.email.value, evt.target.password.value);
-      this.handleClose();
+      return this.props.login(evt.target.email.value, evt.target.password.value).then(function () {
+
+        _this2.setState({ logged: true });
+      });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
+      {
+        console.log(this.state, this.props, this.props.help, "props ara here", this.props.login.toString());
+      }
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'form',
           { onSubmit: function onSubmit(evt) {
-              return _this2.handleSubmit(evt);
+              return _this3.handleSubmit(evt);
             } },
           _react2.default.createElement('input', { className: 'credentials', name: 'email', placeholder: 'Email', required: true }),
           _react2.default.createElement('br', null),
@@ -52133,7 +52106,12 @@ var LoginForm = function (_React$Component) {
           _react2.default.createElement('br', null),
           _react2.default.createElement('br', null),
           _react2.default.createElement('input', { className: 'btn', type: 'submit', value: 'Login' })
-        )
+        ),
+        this.state.logged === true && this.props.user.auth === '' ? _react2.default.createElement(
+          'div',
+          { style: { color: 'red' } },
+          'User Does not Exist'
+        ) : null
       );
     }
   }]);
@@ -52141,7 +52119,9 @@ var LoginForm = function (_React$Component) {
   return LoginForm;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(null, { login: _auth.login })(LoginForm);
+exports.default = (0, _reactRedux.connect)(function (user) {
+  return { user: user };
+}, { login: _auth.login, store: _store2.default })(LoginForm);
 
 /***/ }),
 /* 317 */
@@ -52164,9 +52144,9 @@ var _reactModalDialog = __webpack_require__(151);
 
 var _modal = __webpack_require__(64);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
-var _auth = __webpack_require__(16);
+var _auth = __webpack_require__(17);
 
 var _store = __webpack_require__(41);
 
@@ -52197,6 +52177,7 @@ var SignupForm = function (_React$Component) {
     };
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.state = { signedUp: null };
     return _this;
   }
 
@@ -52205,13 +52186,16 @@ var SignupForm = function (_React$Component) {
     value: function handleSubmit(evt) {
       evt.preventDefault();
       this.props.signup(evt.target.email.value, evt.target.password.value, evt.target.name.value);
-      this.handleClose();
+      this.setState({ signedUp: true });
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      {
+        console.log('props', this.props);
+      }
       return _react2.default.createElement(
         'div',
         null,
@@ -52228,7 +52212,12 @@ var SignupForm = function (_React$Component) {
           _react2.default.createElement('br', null),
           _react2.default.createElement('br', null),
           _react2.default.createElement('input', { className: 'btn', type: 'submit', value: 'Sign Up' })
-        )
+        ),
+        this.state.signedUp === true && this.props.user.auth === '' ? _react2.default.createElement(
+          'div',
+          { style: { color: 'red' } },
+          'Incorrect Input'
+        ) : null
       );
     }
   }]);
@@ -52236,10 +52225,9 @@ var SignupForm = function (_React$Component) {
   return SignupForm;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(function (_ref) {
-  var modal = _ref.modal;
-  return { modal: modal };
-}, { modalShow: _modal.modalShow, modalHide: _modal.modalHide, signup: _auth.signup })(SignupForm);
+exports.default = (0, _reactRedux.connect)(function (user) {
+  return { user: user };
+}, { signup: _auth.signup })(SignupForm);
 
 /***/ }),
 /* 318 */
@@ -52358,7 +52346,7 @@ var _reactRouter = __webpack_require__(20);
 
 var _reactDom = __webpack_require__(63);
 
-var _reactRedux = __webpack_require__(10);
+var _reactRedux = __webpack_require__(11);
 
 var _email = __webpack_require__(96);
 
@@ -52479,7 +52467,7 @@ var _redux = __webpack_require__(94);
 var _reduxResponsive = __webpack_require__(284);
 
 var rootReducer = (0, _redux.combineReducers)({
-  auth: __webpack_require__(16).default,
+  auth: __webpack_require__(17).default,
 
   plaid: __webpack_require__(51).default,
 
@@ -58806,7 +58794,7 @@ module.exports = __webpack_require__(359);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(361);
-var $Object = __webpack_require__(17).Object;
+var $Object = __webpack_require__(16).Object;
 module.exports = function create(P, D){
   return $Object.create(P, D);
 };
@@ -58816,7 +58804,7 @@ module.exports = function create(P, D){
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(362);
-var $Object = __webpack_require__(17).Object;
+var $Object = __webpack_require__(16).Object;
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
@@ -58826,14 +58814,14 @@ module.exports = function defineProperty(it, key, desc){
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(363);
-module.exports = __webpack_require__(17).Object.getPrototypeOf;
+module.exports = __webpack_require__(16).Object.getPrototypeOf;
 
 /***/ }),
 /* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(364);
-module.exports = __webpack_require__(17).Object.setPrototypeOf;
+module.exports = __webpack_require__(16).Object.setPrototypeOf;
 
 /***/ }),
 /* 337 */
@@ -58843,7 +58831,7 @@ __webpack_require__(366);
 __webpack_require__(365);
 __webpack_require__(367);
 __webpack_require__(368);
-module.exports = __webpack_require__(17).Symbol;
+module.exports = __webpack_require__(16).Symbol;
 
 /***/ }),
 /* 338 */
@@ -59089,7 +59077,7 @@ module.exports.f = function getOwnPropertyNames(it){
 
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(53)
-  , core    = __webpack_require__(17)
+  , core    = __webpack_require__(16)
   , fails   = __webpack_require__(65);
 module.exports = function(KEY, exec){
   var fn  = (core.Object || {})[KEY] || Object[KEY]
@@ -59180,7 +59168,7 @@ module.exports = function(it){
 var classof   = __webpack_require__(171)
   , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(67);
-module.exports = __webpack_require__(17).getIteratorMethod = function(it){
+module.exports = __webpack_require__(16).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
@@ -59192,7 +59180,7 @@ module.exports = __webpack_require__(17).getIteratorMethod = function(it){
 
 var anObject = __webpack_require__(52)
   , get      = __webpack_require__(357);
-module.exports = __webpack_require__(17).getIterator = function(it){
+module.exports = __webpack_require__(16).getIterator = function(it){
   var iterFn = get(it);
   if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
   return anObject(iterFn.call(it));
@@ -59205,7 +59193,7 @@ module.exports = __webpack_require__(17).getIterator = function(it){
 var classof   = __webpack_require__(171)
   , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(67);
-module.exports = __webpack_require__(17).isIterable = function(it){
+module.exports = __webpack_require__(16).isIterable = function(it){
   var O = Object(it);
   return O[ITERATOR] !== undefined
     || '@@iterator' in O
@@ -77708,7 +77696,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(11);
+  ReactComponentTreeHook = __webpack_require__(10);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -77716,7 +77704,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(11);
+      ReactComponentTreeHook = __webpack_require__(10);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -80383,7 +80371,7 @@ module.exports = ReactDOMInput;
 
 
 var DOMProperty = __webpack_require__(37);
-var ReactComponentTreeHook = __webpack_require__(11);
+var ReactComponentTreeHook = __webpack_require__(10);
 
 var warning = __webpack_require__(3);
 
@@ -80481,7 +80469,7 @@ module.exports = ReactDOMInvalidARIAHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(11);
+var ReactComponentTreeHook = __webpack_require__(10);
 
 var warning = __webpack_require__(3);
 
@@ -81353,7 +81341,7 @@ module.exports = {
 
 var DOMProperty = __webpack_require__(37);
 var EventPluginRegistry = __webpack_require__(87);
-var ReactComponentTreeHook = __webpack_require__(11);
+var ReactComponentTreeHook = __webpack_require__(10);
 
 var warning = __webpack_require__(3);
 
@@ -81472,7 +81460,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(574);
 var ReactHostOperationHistoryHook = __webpack_require__(572);
-var ReactComponentTreeHook = __webpack_require__(11);
+var ReactComponentTreeHook = __webpack_require__(10);
 var ExecutionEnvironment = __webpack_require__(7);
 
 var performanceNow = __webpack_require__(438);
@@ -84806,7 +84794,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(11);
+  ReactComponentTreeHook = __webpack_require__(10);
 }
 
 var loggedTypeFailures = {};
@@ -84848,7 +84836,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(11);
+            ReactComponentTreeHook = __webpack_require__(10);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -85047,7 +85035,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(11);
+  ReactComponentTreeHook = __webpack_require__(10);
 }
 
 /**
@@ -85063,7 +85051,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(11);
+        ReactComponentTreeHook = __webpack_require__(10);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -92440,7 +92428,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(11);
+  ReactComponentTreeHook = __webpack_require__(10);
 }
 
 var loggedTypeFailures = {};
@@ -92482,7 +92470,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(11);
+            ReactComponentTreeHook = __webpack_require__(10);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);

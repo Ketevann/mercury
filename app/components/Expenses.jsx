@@ -28,7 +28,7 @@ var categories = {
 }
 
 
-class Expenses extends Component {
+export class Expenses extends Component {
   constructor(props) {
     super(props)
     this.submitTransactionDate = this.submitTransactionDate.bind(this)
@@ -89,7 +89,6 @@ class Expenses extends Component {
     }, 0)
   }
   render() {
-    {console.log(this.props, 'props')}
     const {budget, modal, modalShow, plaid} = this.props
      let transactions = this.props.transactions.transactions, budgetsum = 0, val
 
