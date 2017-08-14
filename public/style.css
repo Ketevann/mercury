@@ -709,14 +709,13 @@ button.btn.btn-warning.signup{
   margin-left:40px;
 
 }
-.expense{
-margin-left: 40px;
+.expenses{
+margin-left: 60px;
 }
 
 .bar-chart{
   margin-left:20px;
 }
-.table{
-  margin-left:-30px;
+.table.table.table-bordered{
   width: 90%
 }

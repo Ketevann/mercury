@@ -1788,14 +1788,13 @@ var reducer = function reducer() {
 
   switch (action.type) {
     case AUTHENTICATED:
-      console.log(action.user, ' user');
+
       return action.user;
   }
   return state;
 };
 
 var authenticated = exports.authenticated = function authenticated(user) {
-  console.log('user is null!!!!!');
   return { type: AUTHENTICATED, user: user };
 };
 
@@ -1803,7 +1802,7 @@ var login = exports.login = function login(email, password) {
   console.log('loglog');
   return function (dispatch) {
     return _axios2.default.post('/api/auth/login/local', { email: email, password: password }).then(function () {
-      return dispatch(authenticated());
+      return dispatch(whoami());
     }).catch(function () {
       return dispatch(whoami());
     });
@@ -1835,9 +1834,9 @@ var whoami = exports.whoami = function whoami() {
   return function (dispatch) {
     return _axios2.default.get('/api/auth/whoami').then(function (response) {
       var user;
-      console.log("888", response);
-      if (response.data === 'unsuccessful') user = null;else user = response.data;
-      dispatch(authenticated(user));
+      console.log("in whoami&***********");
+      if (response.data === '') user = null;else user = response.data;
+      dispatch(authenticated(response.data));
     }).catch(function (failed) {
       return dispatch(authenticated(null));
     });
@@ -38016,7 +38015,7 @@ var Expenses = exports.Expenses = function (_Component) {
         plaidArr = this.ArrayforChart(budget.budget, [], 0);
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'expenses' },
         _react2.default.createElement(
           'div',
           { className: 'form-container calendar' },
@@ -52033,6 +52032,7 @@ exports.default = DisplayBudget;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.LoginForm = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -52058,7 +52058,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var LoginForm = function (_React$Component) {
+var LoginForm = exports.LoginForm = function (_React$Component) {
   _inherits(LoginForm, _React$Component);
 
   function LoginForm() {
@@ -52075,19 +52075,17 @@ var LoginForm = function (_React$Component) {
   _createClass(LoginForm, [{
     key: 'handleSubmit',
     value: function handleSubmit(evt) {
-      var _this2 = this;
-
-      console.log("here we areeee*********************************");
       evt.preventDefault();
-      return this.props.login(evt.target.email.value, evt.target.password.value).then(function () {
+      var email = evt.target.email.value,
+          password = evt.target.password.value;
 
-        _this2.setState({ logged: true });
-      });
+      this.props.login(email, password);
+      this.setState({ logged: true });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       {
         console.log(this.state, this.props, this.props.help, "props ara here", this.props.login.toString());
@@ -52098,7 +52096,7 @@ var LoginForm = function (_React$Component) {
         _react2.default.createElement(
           'form',
           { onSubmit: function onSubmit(evt) {
-              return _this3.handleSubmit(evt);
+              return _this2.handleSubmit(evt);
             } },
           _react2.default.createElement('input', { className: 'credentials', name: 'email', placeholder: 'Email', required: true }),
           _react2.default.createElement('br', null),

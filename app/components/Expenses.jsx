@@ -117,7 +117,7 @@ export class Expenses extends Component {
     if (budget.budget) // turns the budget object into an array of objects
       plaidArr = this.ArrayforChart(budget.budget, [], 0)
     return (
-    <div>
+    <div className="expenses">
       <div className="form-container calendar">
         <h2>Select transaction dates:</h2>
         <form className="pure-form" onSubmit={(evt) => this.submitTransactionDate(evt)}>
