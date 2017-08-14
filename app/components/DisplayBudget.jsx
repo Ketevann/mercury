@@ -8,7 +8,7 @@ const DisplayBudget = (props) => {
   <div className="expense">
   <h3>Budget Expenses</h3>
     {props.budget ?
-      <table className="table table-bordered">
+      <table className="table table-bordered budgettable">
         <thead className="habits" >
           <tr>
             <th>#</th>

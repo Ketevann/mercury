@@ -51890,7 +51890,7 @@ var DisplayBudget = function DisplayBudget(props) {
     ),
     props.budget ? _react2.default.createElement(
       'table',
-      { className: 'table table-bordered' },
+      { className: 'table table-bordered budgettable' },
       _react2.default.createElement(
         'thead',
         { className: 'habits' },
