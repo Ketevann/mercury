@@ -43,9 +43,7 @@ class Modal extends React.Component {
                   <SignupForm />
                 </div>}
               <br></br>
-              {this.props.user === null?
-             <div style={{color: 'red'}}>User Does not Exist</div>
-             :null}
+
               <a href="/api/auth/login/google"> <button className="google"></button> </a>
             </ModalDialog>
           </ModalContainer>

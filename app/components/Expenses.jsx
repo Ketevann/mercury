@@ -51,7 +51,7 @@ export class Expenses extends Component {
       if (key !== 'created_at' && key !== 'updated_at' && key !== 'user_id' && key !== 'id'){
        if (Number(expenseCategory[key])>0)
          expensesSum += Number(expenseCategory[key])
-        plaid.push({ x: key, y: expenseCategory[key] })
+        plaid.push({ letter: key, frequency: expenseCategory[key] })
       }
     })
     return plaid

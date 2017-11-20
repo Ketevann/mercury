@@ -14,19 +14,22 @@ const reducer = (state = null, action) => {
   return state
 }
 
-export const authenticated = user =>
-   ({ type: AUTHENTICATED, user })
-
-
-
-export const login = (email, password) => {
-  console.log('loglog')
-  return dispatch =>
-    axios.post('/api/auth/login/local',
-      { email, password })
-      .then(() => dispatch(whoami()))
-     .catch(() => dispatch(whoami()))
+export const authenticated = user => {
+  //console.log(user, ' USERR!!!!')
+  return { type: AUTHENTICATED, user }
 }
+
+
+export const login = (email, password) =>
+   dispatch =>
+    axios.post('/api/auth/login/local', {email, password})
+
+       .then((res) => {
+         console.log('idk')
+         return dispatch(authenticated(res.data))
+        })
+       .catch((err) => console.log(err))
+
 
 export const signup = (email, password, name) =>
   dispatch =>
@@ -42,19 +45,26 @@ export const logout = () =>
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
 
-export const whoami = () =>
-  {
+// export const userExpenses = () =>
+//   dispatch =>
+//     axios.get('api/budget')
+//       .then((res) => dispatch(create(res.data)))
+//       .catch(console.error())
 
-    return dispatch =>
+
+
+export const whoami = () =>
+  dispatch =>
     axios.get('/api/auth/whoami')
-      .then(response =>{
+      .then(response => {
         var user
-         console.log("in whoami&***********")
-         if (response.data === '') user = null
-         else user = response.data
-        dispatch(authenticated(response.data))
+      //  console.log("in whoami yooooo")
+        if (response.data === '') user = null
+        else user = response.data
+        dispatch(authenticated(user))
       })
-      .catch(failed => dispatch(authenticated(null)))
-  }
+
+      .catch(err => console.log(err))
+
 
 export default reducer

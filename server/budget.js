@@ -24,7 +24,7 @@ module.exports = require('express').Router()
     })
   .then(budget => {
     if (budget === null) res.end()
-      else{
+    else {
       res.status(200).json(budget.expense)
     }
   })

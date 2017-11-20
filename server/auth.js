@@ -106,11 +106,17 @@ passport.deserializeUser(
 )
 
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/whoami', (req, res) =>{
+  //console.log(req.user, 'user in who am i!!!!!!!!!!')
+
+  return res.send(req.user)
+})
 
 // POST requests for local login:
 // maybe add a fail redirect to a signup page?
 auth.post('/login/local', (req, res, next) => {
+ // console.log('local here !!!')
+
   const { email, password } = req.body;
   User.findOne({
     where: { email },
@@ -185,6 +191,7 @@ auth.get('/login/:strategy', (req, res, next) => {
 
 auth.post('/logout', (req, res) => {
   req.logout()
+  //console.log('logout!!')
   res.redirect('/api/auth/whoami')
 })
 

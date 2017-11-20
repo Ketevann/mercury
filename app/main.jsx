@@ -8,7 +8,7 @@ import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
-import Navbar from './components/Navbar'
+import Navigation from './components/Navigation'
 import Budget from './components/Budget'
 import Front from './components/Front'
 import Footer from './components/Footer'
@@ -46,12 +46,10 @@ const ExampleApp = connect(
       {<nav>
 
       </nav>}
-      <Navbar />
-      {/* Render our children (whatever the router gives us) */}
+      <Navigation />
       {children}
             <Footer />
 
-      {/*<Sidebar /> */}
 
 
 

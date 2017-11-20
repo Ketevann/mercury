@@ -78,7 +78,7 @@ const favorites = seed(Favorite,
 
 if (module === require.main) {
   db.didSync
-    .then(() => db.sync({force: true}))
+    .then(() => db.sync({force}))
     .then(seedEverything)
     .finally(() => process.exit(0))
 }
