@@ -16,7 +16,8 @@ const app = require('APP')
       OAuth: require('./oauth'),
       User: require('./user'),
       Expense: require('./expenses'),
-      AccessToken: require('./accessTokens')
+      AccessToken: require('./accessTokens'),
+      passwordtoken: require('./passwordToken')
       // ---------- Add new models here ----------
     }
     , {mapValues} = require('lodash')

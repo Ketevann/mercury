@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import {modalShow, modalHide} from '../reducers/modal'
 import {Login, Signup} from '../reducers/login'
-
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { login, signup } from 'APP/app/reducers/auth'
 import LoginForm from './LoginForm'
@@ -32,6 +32,7 @@ class Modal extends React.Component {
                   <br></br>
                   <h2 clssName="clear">Member Login</h2>
                   <LoginForm login={login} />
+                  <Link to="/forgotpassword">Forgot Password?</Link>
 
                 </div> :
                 <div>

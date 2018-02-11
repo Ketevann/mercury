@@ -2,34 +2,49 @@
 const db = require('APP/db')
 const Expenses = db.model('expense')
 const User = db.model('users')
+const AccessToken = db.model('accessToken');
 
 
 // need to add FindUser in case user exists
 module.exports = require('express').Router()
-.post('/', (req, res, next) => {
-  Expenses.create(req.body)
-  .then(expenses => {
-    req.user.setExpense(expenses.id)
-      .then(() => {
-        res.send(expenses)
+  .post('/', (req, res, next) => {
+    Expenses.create(req.body)
+      .then(expenses => {
+        req.user.setExpense(expenses.id)
+          .then(() => {
+            AccessToken.findAll({
+              include: [
+                {
+                  model: User, include: [
+                    { model: Expenses }
+                  ]
+                }
+              ]
+            }
+            )
+            .then(toke =>{
+              JSON.parse(JSON.stringify(toke))
+              res.send(JSON.parse(JSON.stringify(toke)))
+            })
+
+          })
       })
+      .catch(next)
   })
-     .catch(next)
-})
-.get('/', (req, res, next) => {
-  if (req.user) {
-    return User.findOne({
-      where: { id: req.user.id },
-      include: [Expenses]
-    })
-  .then(budget => {
-    if (budget === null) res.end()
-    else {
-      res.status(200).json(budget.expense)
+  .get('/', (req, res, next) => {
+    if (req.user) {
+      return User.findOne({
+        where: { id: req.user.id },
+        include: [Expenses]
+      })
+        .then(budget => {
+          if (budget === null) res.end()
+          else {
+            res.status(200).json(budget.expense)
+          }
+        })
+        .catch(next)
+    } else {
+      res.status(404).end()
     }
   })
-  .catch(next)
-  } else {
-    res.status(404).end()
-  }
-})

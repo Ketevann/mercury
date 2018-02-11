@@ -44,3 +44,16 @@ module.exports = require('express').Router()
         res.send(updated)
       })
   })
+
+
+.put('/addToUser', (req,res,next)=>{
+  console.log('HIT THIS ROUTE?')
+  var user = req.user
+  user.update({
+    thing: req.body.thing,
+    amount: req.body.amount
+  })
+  .then((updated)=>{
+    res.send(updated)
+  })
+})

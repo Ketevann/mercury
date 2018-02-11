@@ -16,6 +16,8 @@ const rootReducer = combineReducers({
 
   menu: require('./dropdown').default,
 
+  forgot: require('./forgot').default,
+
   browser: responsiveStateReducer
 })
 

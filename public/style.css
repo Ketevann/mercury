@@ -55,6 +55,9 @@ background-repeat: no-repeat;
 
         margin-top: 0px;
     }
+    img#imgsuccess {
+    display: none;
+}
 }
 
 
@@ -65,7 +68,7 @@ background-repeat: no-repeat;
 
 
 .header {
-  margin-top: 150px;
+  /*margin-top: 150px;*/
   padding-bottom: 0px;
   color:white
 }
@@ -263,12 +266,11 @@ table tfoot tr th{
     padding-top: 10px;
 }
 
-/*
+
 body {
    min-height: 400px;
-  margin-bottom:70px;
-   clear: both;
-}*/
+   width:100%
+}
 
 
 .addexpense{
@@ -280,15 +282,16 @@ body {
     left:400px;
 }
 
-.expense, .budgetform{
+.expense{
     margin-bottom: 80px;
-    padding-left:40px;
-    padding-top: 50px;
+    /*padding-left:40px;
+    padding-top: 50px;*/
 }
 .email{
-    padding-top: 50px;
-    padding-left:40px;
+    /*padding-top: 50px;
+    padding-left:40px;*/
     margin-bottom :85px;
+    /*margin-left: 20px;*/
 }
 
 .coolemail{
@@ -401,11 +404,11 @@ a.nounderline:link
     left:400px;
 }
 
-.expense, .budgetform{
+/*.expense{
     margin-bottom: 80px;
     padding-left:40px;
     padding-top: 50px;
-}
+}*/
 
 
 .coolemail{
@@ -703,6 +706,7 @@ button.btn.btn-warning.signup{
 }
 .transactable{
   margin-left: 0px;
+  width: 100%;
 }
 
   #totalexpense {
@@ -747,4 +751,234 @@ a#basic-nav-dropdown {
 a.menuicon{
   color:gray;
   padding: 15px;
+}
+
+#budgetformpic{
+  width: 770px;
+  height: auto;
+  align-self: center;
+  max-width: 100%;
+  /*min-width: 500px;*/
+  margin-top: 20px;
+  padding-right: 20px;
+}
+.budgetinput {
+    border: 0px;
+    border-bottom: 1px black solid;
+    outline: none;
+    width: 144%;
+    padding-top: 15px;
+    margin-top: 17px;
+}
+.budgetflex{
+  display: flex;
+  margin-left: 24px;
+}
+h3#budgetheader, .email {
+    font-family: avenir-book;
+}
+.budgetform {
+  margin-left: 80px;
+  padding-right: 30px;
+
+    margin-bottom: 100px;
+
+}
+
+input.form-control {
+    border: solid 1px black !important;
+    border-width: 0 0 1px 0 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+    box-shadow: 0 !important;
+    display: block !important;
+    font-size: 15px !important;
+    line-height: 1!important;
+    padding: 5px 20px 20px 14px;
+    width: 100%;
+    box-shadow: none !important;
+}
+#budgetsubmit{
+  position: relative;
+  top: 20px;
+  width: 100%;
+  background-color: #53ecd0;
+  color: black;
+}
+
+.form-group {
+    width: 305px !important;
+}
+table.table.table-bordered.budgettable, .expenses{
+  font-family: avenir-book;
+}
+
+@media only screen and (max-width: 800px)
+{
+  .budgetflex{
+  flex-direction: column;
+  align-items: center;
+}
+.budgetform{
+  margin-left:10px;
+}
+}
+
+table.table.table-bordered.transactable {
+    font-family: avenir-book;
+}
+
+.recharts-wrapper {
+    margin-left: 33px !important;
+}
+.recharts-responsive-container{
+    width: 95% !important;
+
+}
+
+div#startdate, #enddate {
+    padding-right: 16px;
+    display: inline-block;
+    position: relative;
+    left: 10px;
+}
+.pure-input-rounded {
+  display: inline-block;
+
+}
+
+button#transacbutton {
+    background-color: #53ecd0;
+    position: relative;
+    left: 8px;
+    width: 144px;
+}
+
+.expense {
+    margin-bottom: 80px;
+    /* padding-left: 40px; */
+    padding-top: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.expense {
+    margin-bottom: 80px;
+    /* padding-left: 40px; */
+    padding-top: 50px;
+}
+h4.expensedheader {
+    display: inline;
+}
+
+
+
+a.expensedheader.linkword {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.expenseheaderwrapper {
+    padding-bottom: 19px;
+}
+
+/*.email-wrapper {
+    DISPLAY: flex;
+}*/
+img#imgsuccess {
+    width: 499PX;
+    max-width: 100%;
+    min-width: 300px;
+}
+
+input[type="text"] {
+    border: 0px;
+    border-bottom: 1px black solid;
+    width: 300px;
+    height: 46px;
+}
+.email-button{
+  background-color: #53ecd0;
+  width: 300px;
+}
+/*.email-flex-col {
+    margin-left: 60px;
+}*/
+
+@media only screen and (max-width: 780px)
+{
+img#imgsuccess {
+   display: none;
+}
+/*.email-wrapper {
+    DISPLAY: flex;
+    align-items: center;
+}*/
+/*.email-flex-col {
+    margin-left: 20px;
+    margin-top: 10px;
+}*/
+}
+div#update-purchase-buttons, div#select-buttons, .enable-name {
+    display: inline-block;
+}
+
+div#select-buttons, div#update-purchase-buttons {
+    padding-left: 15px;
+}
+
+.enable-budget-wrapper {
+    padding-bottom: 24px;
+}
+
+.email-wrapper {
+    /*margin-top: 26px;
+    /* DISPLAY: flex; */
+    /* align-items: center; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    text-align: center;
+    /* align-self: center; */
+    border: 1px #53ecd0 solid;
+    border-radius: 10px;
+
+}
+
+/*.enable-budget-wrapper {
+    margin-top: 36px;
+}*/
+/*.email {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}*/
+
+.email-flex-col {
+    padding: 14px;
+}
+.email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#email-header{
+  text-align: center;
+}
+h3#budgetheader {
+    text-align: center;
+}
+.text-wrapper {
+    padding: 20px;
+}
+
+.homepage.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

@@ -26,21 +26,16 @@ module.exports = {
     alias: {
       'react': path.join(__dirname, 'node_modules', 'react')
     },
-    extensions: ['.js', '.jsx', '.json', '*']
+    extensions: ['.js', '.jsx', '.json', '*', 'png, "jpg', "jpeg", "svg"]
   },
   module: {
-    rules: [{
-      test: /jsx?$/,
-      exclude: /(node_modules|bower_components)/,
-      use: [{
-        loader: 'babel-loader',
-        options: {
-          presets: ['react', 'es2015', 'stage-2']
-        }
-      }]
-    }]
+        loaders: [
+      {exclude: ['node_modules|bower_components'], loader:  'babel-loader', test: /\.jsx?$/},
+      {loader: 'style-loader!css-loader', test: /\.css$/},
+      {loader: 'url-loader', test:  /\.(png|jp(e*)g|svg)$/},
+      {loader: 'file-loader', test: /\.(ttf|eot|svg)$/},
+    ],
   },
-
   plugins: devMode
     ? [new LiveReloadPlugin({appendScriptTag: true})]
     : []

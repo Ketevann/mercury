@@ -13,7 +13,8 @@ import Budget from './components/Budget'
 import Front from './components/Front'
 import Footer from './components/Footer'
 import Email from './components/Email'
-
+import ForgotPassword from './components/ForgotPassword'
+import ResetPassword from './components/ResetPassword'
 
 import {fetchTransactions} from './reducers/plaid.jsx'
 
@@ -48,7 +49,6 @@ const ExampleApp = connect(
       </nav>}
       <Navigation />
       {children}
-            <Footer />
 
 
 
@@ -73,6 +73,8 @@ render(
          <Route path="/addexpenses" component={BudgetForm} />
         <Route path="/myexpenses" component={Expenses} onEnter={getExpenses} />
          <Route path='/home' component={Front} />
+        <Route path='/forgotpassword' component={ForgotPassword} />
+        <Route path='/reset/:token' component={ResetPassword} />
          <Route path='/emailSettings' component={Email} onEnter={getInitalEmailSettings} />
       </Route>
       {/*<Route path='/home' component={FrontPage} />

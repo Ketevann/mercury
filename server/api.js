@@ -19,10 +19,8 @@ api
   .use('/email', require('./email'))
   .use('/timer', require('./time'))
   .use('/budget', require('./budget'))
+  //.use('/forgotpassword', require('./forgotpassword'))
 
-// We store the access_token in memory - in production, store it in a secure
-// persistent data store
-//const ACCESS_TOKEN = 'access-development-8d91f539-03cc-40dd-8833-cf30e1f23370'
 
 
 api.get('/bla', (req, res, next) =>{

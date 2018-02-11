@@ -33,6 +33,7 @@ class Navigation extends Component {
   }
 
   render() {
+    {console.log(this.props,' props')}
     var disp, displayStyle
     //toggle; if menu is true the menu dropsdown by setting the navbar to  inline-block
     if (this.props.menu.showMenu === true)
@@ -59,7 +60,7 @@ class Navigation extends Component {
       <Navbar  inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <img className="logo menuicon" src={'./logo3.png'} />
+            <img className="logo menuicon" src={require('../../public/logo3.png')} />
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

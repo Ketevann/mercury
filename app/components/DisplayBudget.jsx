@@ -6,8 +6,9 @@ import TransactionsTable from './TransactionsTable'
 const DisplayBudget = (props) => {
     return (
   <div className="expense">
-  <h3>Budget Expenses</h3>
+
     {props.budget ?
+
       <table className="table table-bordered budgettable">
         <thead className="habits" >
           <tr>
@@ -22,7 +23,7 @@ const DisplayBudget = (props) => {
               return (
                 <tbody>
                   <tr>
-                    <th scope="row">{index + 1}</th>
+                    <td scope="row">{index + 1}</td>
                     <td>{key}</td>
                     <td>{props.budget[key]}</td>
                   </tr>
@@ -30,10 +31,12 @@ const DisplayBudget = (props) => {
             }
           })
         }
-      </table> : null}
+      </table>: null}
+       {props.transactions ?
+          <h3>Expenses</h3>
+      : null}
     {props.transactions?
-    <div className="transactable">
-      <h3 >  Expenses </h3>
+
       <table className="table table-bordered transactable">
         <thead className="habits" >
           <tr>
@@ -43,12 +46,13 @@ const DisplayBudget = (props) => {
             <th>Cost</th>
           </tr>
         </thead>
+
           {
           props.transactions && props.transactions.map((item, index) => {
               return (
               <tbody>
                 <tr>
-                  <th scope="row">{index + 1}</th>
+                  <td scope="row">{index + 1}</td>
                   <td>{item.name}</td>
                   {item.category ? (<td>{item.category[0]}</td>) : (<td>N/A</td>)}
                   <td>{item.amount}</td>
@@ -57,7 +61,7 @@ const DisplayBudget = (props) => {
             })
           }
         </table>
-    </div> :null}
+     :null}
    </div>
   )
 }

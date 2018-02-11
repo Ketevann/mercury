@@ -9,7 +9,8 @@ import Modal from './Modal'
 
 const Front = (props) => {
   return (
-    <div className="homepage">
+    <div className="homepage flex">
+    <div className="text-wrapper">
       <h2 className="tex header "> SPEND YOUR MONEY WISELY</h2>
       <h4 className="text ">Mercury helps you keep track of your budget and spending</h4>
       <h4 className="hometext "> and alerts you when you go off-track</h4>
@@ -17,7 +18,9 @@ const Front = (props) => {
       <button onClick={() => store.dispatch(props.modalShow()) } type="button" className="btn btn-warning signup">Sign Up</button>
       </div>
       {props.modal.signup ? <Modal /> :null}
-    </div>)
+    </div>
+    </div>
+    )
   }
 
 

@@ -25,8 +25,8 @@ export const login = (email, password) =>
     axios.post('/api/auth/login/local', {email, password})
 
        .then((res) => {
-         console.log('idk')
-         return dispatch(authenticated(res.data))
+         console.log('idk', res)
+        return dispatch(whoami())
         })
        .catch((err) => console.log(err))
 
@@ -58,7 +58,7 @@ export const whoami = () =>
     axios.get('/api/auth/whoami')
       .then(response => {
         var user
-      //  console.log("in whoami yooooo")
+       console.log("in whoami yooooo", response.data)
         if (response.data === '') user = null
         else user = response.data
         dispatch(authenticated(user))

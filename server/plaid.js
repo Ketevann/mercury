@@ -5,9 +5,9 @@ const app = require('APP'), { env } = app
 const api = module.exports = require('express').Router()
 const plaid = require('plaid')
 const envvar = require('envvar')
-const PLAID_CLIENT_ID = env.PLAID_CLIENT_ID
-const PLAID_SECRET = env.PLAID_SECRET
-const PLAID_PUBLIC_KEY = env.PLAID_PUBLIC_KEY
+const PLAID_CLIENT_ID = require('../newCredentials').PLAID_CLIENT_ID
+const PLAID_SECRET = require('../newCredentials').PLAID_SECRET
+const PLAID_PUBLIC_KEY =require('../newCredentials').PLAID_PUBLIC_KEY
 const PLAID_ENV = envvar.string('PLAID_ENV', 'development')
 const db = require('../db')
 const AccessToken = db.model('accessToken');

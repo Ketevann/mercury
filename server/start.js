@@ -55,6 +55,8 @@ module.exports = app
 
   // Serve our api - ./api also requires in ../db, which syncs with our database
   .use('/api', require('./api'))
+  .use('/forgotpassword', require('./forgotpassword'))
+
 
   // any requests with an extension (.js, .css, etc.) turn into 404
   .use((req, res, next) => {
