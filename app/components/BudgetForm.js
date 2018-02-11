@@ -7,9 +7,9 @@ import { FormGroup, FormControl, Button } from 'react-bootstrap'
 class BudgetForm extends React.Component {
   constructor() {
     super()
-    this.state = {error: null}
+    this.state = { error: null }
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange= this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   handleSubmit(evt) {
     evt.preventDefault()
@@ -25,14 +25,16 @@ class BudgetForm extends React.Component {
     }
     let notaNumber = false;
     for (var key in newBudget) {
-      if (isNaN(key)) {
+      if (isNaN(newBudget[key])) {
         notaNumber = true
         break
       }
     }
-   // if (!notaNumber)
-    this.props.budgetCreate(newBudget)
-   // else this.setState({error: 'Please enter valid values' })
+    if (!notaNumber) {
+      this.props.budgetCreate(newBudget)
+      this.setState({ error: null })
+    }
+    else this.setState({ error: 'Please enter valid values' })
     evt.target.food.value = ""
     evt.target.bills.value = ""
     evt.target.healthcare.value = ""
@@ -43,16 +45,14 @@ class BudgetForm extends React.Component {
     evt.target.other.value = ""
   }
 
-handleChange(evt) {
-  console.log(evt.target.value, ' in hanle change', typeof evt.target.value, isNaN(evt.target.value))
-  if(isNaN(evt.target.value)){
-    this.setState({error: 'Please enter a number'})
+  handleChange(evt) {
+    if (isNaN(evt.target.value)) {
+      this.setState({ error: 'Please enter a valid number' })
+    }
+    else {
+      this.setState({ error: null })
+    }
   }
-  else {
-    console.log(evt.target.value)
-     this.setState({error: null})
-  }
-}
   render() {
     return (<div className="budgetflex">
       <div className="budgetimage">
@@ -61,62 +61,54 @@ handleChange(evt) {
       <div className="budgetform">
         <h3 id="budgetheader">Enter your budget</h3>
         {this.state.error ?
-          this.state.error : null
-      }
+          <div id="budget-error" style={{ 'font-family': 'avenir-book', 'text-align': 'center' }}>{this.state.error}</div> : null
+        }
         <form onSubmit={(evt) => this.handleSubmit(evt)}>
-
           <FormGroup bsSize="large">
             <FormControl placeholder="Bills" className="budgetinput" required name="bills" step="0.01" id="example-text-input"
-            onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup>
             <FormControl placeholder="Education" className="budgetinput" required name="education" step="0.01" id="example-search-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup bsSize="small">
             <FormControl placeholder="Emergency" className="budgetinput" required name="emergency" step="0.01" id="example-email-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup bsSize="small">
             <FormControl placeholder="Food" className="budgetinput" required name="food" step="0.01" id="example-tel-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup bsSize="small">
             <FormControl placeholder="Healthcare" className="budgetinput" required name="healthcare" step="0.01" id="example-tel-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup bsSize="small">
             <FormControl placeholder="Entertanment" className="budgetinput" required name="ent" step="0.01" id="example-tel-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
 
           <FormGroup bsSize="small">
             <FormControl placeholder="Transportation" className="budgetinput" required name="transporation" step="0.01" id="example-month-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <FormGroup bsSize="small">
             <FormControl placeholder="Other" className="budgetinput" required name="other" step="0.01" id="example-week-input"
-             onChange={(evt) => this.handleChange(evt) }
-             />
+              onChange={(evt) => this.handleChange(evt)}
+            />
           </FormGroup>
-
           <Button id="budgetsubmit" type="submit">Submit</Button>
         </form>
-        </div>
       </div>
+    </div>
     )
   }
 }

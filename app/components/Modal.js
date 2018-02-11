@@ -8,7 +8,7 @@ import { login, signup } from 'APP/app/reducers/auth'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import store from '../store'
-
+import ForgotPassword from './ForgotPassword'
 
 class Modal extends React.Component {
 
@@ -16,7 +16,6 @@ class Modal extends React.Component {
   handleClose = () => store.dispatch(modalHide())
   render() {
     const { login } = this.props.status
-    {console.log(this.props, 'props')}
     return (
       <div className="modal" onClick={this.handleClick}>{
         this.props.modal.showModal ?
@@ -26,26 +25,37 @@ class Modal extends React.Component {
               <br></br>
               <br></br>
               {this.props.status.login ?
-                <div>
-                  <h5> <a onClick={() => store.dispatch(this.props.Signup())} className="alignright">Sign up</a></h5>
+                <div id="authenticate-form">
+
                   <span className="alignright" >Not a member? </span>
+                  <h5> <a onClick={() => store.dispatch(this.props.Signup())} className="alignright">Sign up</a></h5>
                   <br></br>
                   <h2 clssName="clear">Member Login</h2>
                   <LoginForm login={login} />
-                  <Link to="/forgotpassword">Forgot Password?</Link>
+
 
                 </div> :
-                <div>
+                this.props.status.signUp && !this.props.status.login ?
+                <div id="authenticate-form">
+                <span className="alignright" >Already a member? </span>
                   <h5> <a href="#" onClick={() => store.dispatch(this.props.Login())} className="alignright">Login</a></h5>
-                  <span className="alignright" >Already a member? </span>
+
                   <br></br>
                   <br></br>
                   <h2 clssName="clear">Join Mercury</h2>
                   <SignupForm />
-                </div>}
+                </div> :
+                 this.props.status.forgot ?
+                      <div id="authenticate-form">
+                    <h5>Back to <a href="#" onClick={() => store.dispatch(this.props.Login())} className="alignright">Login</a></h5>
+                    <ForgotPassword />
+                  <br></br>
+                  <br></br>
+                </div>
+
+              :null}
               <br></br>
 
-              <a href="/api/auth/login/google"> <button className="google"></button> </a>
             </ModalDialog>
           </ModalContainer>
           : null}
@@ -55,6 +65,6 @@ class Modal extends React.Component {
 
 
 export default connect(
-  ({ modal, status, user }) => ({ modal: modal, status: status, user: user }),
+  ({ modal, status, user}) => ({ modal: modal, status: status, user: user}),
   {modalShow, modalHide, Signup, Login},
 )(Modal)

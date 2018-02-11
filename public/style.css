@@ -6,6 +6,7 @@
     height: 49px;
     border: none;
     background-color: white;
+    margin-top: 20px;
 
 }
 
@@ -702,7 +703,7 @@ button.btn.btn-warning.signup{
 }
 
 .calendar{
-  margin-left: 50px;
+  margin-left: 10px;
 }
 .transactable{
   margin-left: 0px;
@@ -981,4 +982,102 @@ h3#budgetheader {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+input.btn {
+    background-color: #53ecd0;
+    width: 100%;
+}
+input.credentials {
+    border: 0px;
+    border-bottom: 1px black solid;
+}
+div#authenticate-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: avenir-book;
+        padding-left: 40px;
+    padding-right: 57px
+}
+a#forgot-password {
+    color: black;
+}
+
+div#forgot-link{
+  font-size: 1em;
+  margin-left: 40px;
+  padding-bottom: 10px;
+}
+
+div#password-error {
+    margin-top: 17px;
+}
+div#login-form, div#signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+form.form-signin {
+    display: flex;
+    flex-direction: column;
+}
+
+div#email-sent-confirm {
+    padding-bottom: 21px;
+}
+div#forgot-password-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.forgot-btn{
+  margin-top: 20px;
+}
+div#forgot-password-wrapper{
+  font-family: avenir-book;
+}
+@media screen and (max-width: 440px) {
+  div#authenticate-form {
+
+        padding-left: 20px;
+    padding-right: 20px
+}
+
+}
+
+.expenseheaderwrapper {
+    padding-bottom: 19px;
+    text-align: center;
+    padding-right: 10px;
+}
+h5#selecdates {
+    margin-left: 7px;
+}
+.totalexpense{
+  margin-top: 10px;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dates {
+    display: flex;
+    justify-content: center;
+    /* padding: 10px; */
+}
+
+div#button-wrapper {
+    text-align: center;
+    margin-top: 29px;
+}
+
+.start-date-wrapper, .end-date-wrapper {
+  text-align: center;
+}
+.end-date-wrapper {
+    margin-left: 3px;
 }

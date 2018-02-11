@@ -20,7 +20,6 @@ export const budgetCreate = (credentials) =>
   dispatch =>
     axios.post('/api/budget', credentials)
       .then((res) => {
-        console.log(res, 'TOKEEN')
         dispatch(create(res.data))
       })
       .catch(console.error())

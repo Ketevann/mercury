@@ -14,19 +14,16 @@ class Email extends Component {
   }
 
   onBudgetClick = (evt) => {
-    console.log('onBudget click')
     var status = { budgetUpdates: evt.target.value }
     this.props.budgetEmail(status)
   }
 
   onProdClick = (evt) => {
-     console.log('onProduct click')
     var status = { prodUpdates: evt.target.value }
     this.props.prodEmail(status)
   }
 
   onSubmit = (evt) => {
-    console.log('on submit')
     evt.preventDefault();
 
     var info = {

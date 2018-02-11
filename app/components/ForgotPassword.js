@@ -20,7 +20,8 @@ class ForgotPassword extends React.Component {
   constructor() {
     super()
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      sent: false
     };
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -40,36 +41,39 @@ class ForgotPassword extends React.Component {
   }
   render() {
     const { forgot } = this.props
-    console.log(this.props, 'propss')
     return (
-      <div>
-        <div id="loginform" className="container">
-          <div className="wrapper">
-            <form action method="post" name="Login_Form" className="form-signin" onSubmit={evt => {
+      <div id="login-form">
+          <form action method="post" name="Login_Form" className="form-signin" onSubmit={evt => {
               evt.preventDefault()
-              this.props.forgotPassword(evt.target.username.value)
+              this.props.forgotPassword(evt.target.email.value)
               store.dispatch(forgotPasswordBoolFalse())
+              this.setState({sent: "The password reset link has be sent to your email"})
               this.openModal()
             }}>
-              <h3 className="form-signin-heading">Please Enter Your Email</h3>
-              <hr className="colorgraph" /> <br />
-              <input type="text" className="form-control" name="username" placeholder="Username" required autofocus />
-              <button className="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit">Login</button>
-              <Modal
-                isOpen={this.state.modalIsOpen}
-                onAfterOpen={this.afterOpenModal}
-                onRequestClose={this.closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-              >
-                <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-                <div id="emailnotify">The Password Reset Link Has Been Sent To Your Email!</div>
-                <button className="btn" onClick={this.closeModal}>close</button>
-              </Modal>
-            </form>
+            <h3 className="form-signin-heading">Please Enter Your Email</h3>
+
+          <input onChange={() => this.setState({sent: null })} className="credentials" name="email" placeholder="Email" required />
+          <br></br>
+
+          <div id="forgot-link">
+
           </div>
-        </div>
+             {this.state.sent?
+            <div id="email-sent-confirm">{this.state.sent}</div>
+            : null}
+          <input className="btn" type="submit" value="Submit" />
+        </form>
+        {this.state.logged === true && this.props.user.auth === '' ?
+          <div style={{ color: 'red' }}>User Does not Exist</div>
+          : null}
+
       </div>
+
+
+
+
+
+
 
     )
   }

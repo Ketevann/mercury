@@ -4,35 +4,49 @@ import { connect } from 'react-redux'
 import { resetPassword } from '../reducers/forgot'
 
 class ResetPassword extends React.Component {
+  constructor() {
+    super()
+    this.state = { error: null }
+  }
+
   render() {
     const { forgot } = this.props
     return (
-      <div>
+      <div id="forgot-password-wrapper">
         {
           forgot.reset && forgot.reset.changed ?
             <div id="resetmsg">Password has been reset ! Plase login with you new password by clicking
           <Link to="/login"> here</Link></div>
             :
-            <div>
-              <div id="loginform" className="container">
-                <div className="wrapper">
-                  <form action method="post" name="Login_Form" className="form-signin" onSubmit={(evt) => {
-                    evt.preventDefault()
-                    this.props.resetPassword({ password: evt.target.password.value, token: this.props.token })
-                    evt.target.password.value = ''
-                  }}>
-                    <h3 className="form-signin-heading">Please Enter Your Email New Password</h3>
-                    <hr className="colorgraph" /> <br />
-                    <input type="password" className="form-control" name="password" placeholder="Password" required />
-                    {forgot.reset && !forgot.reset.changed ?
-                      <h4>Password Could not be reset</h4> : null}
-                    <button className="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit">Submit</button>
-                  </form>
-                </div>
-              </div>
-            </div>
+            <form action method="post" name="Login_Form" className="form-signin" onSubmit={(evt) => {
+              evt.preventDefault()
+              if (evt.target.password.value.length < 6) {
+                this.setState({ error: 'The password needs to be at least 6 characters' })
+              }
+              else {
+
+                this.setState({ error: null })
+                this.props.resetPassword({ password: evt.target.password.value, token: this.props.token })
+                evt.target.password.value = ''
+              }
+            }}>
+
+              <h3 className="form-signin-heading">Please Enter Your  New Password</h3>
+              <hr className="colorgraph" /> <br />
+              <input onChange={ () => this.setState({ error: null })} type="password" className="form-control" name="password" placeholder="Password" required />
+              {this.state.error ?
+                <div
+                  className="password-error"
+                >{this.state.error}</div>
+                :
+                null}
+              <input style={{ 'background-color': '#53ecd0' }} className="btn forgot-btn" type="submit" value="Submit" />
+            </form>
         }
       </div>
+
+
+
     )
   }
 }

@@ -50,12 +50,10 @@ export class Expenses extends Component {
   //converts the object in to the array of object with x and y coordinates for a chart
   ArrayforChart(expenseCategory, budget, plaidArr, expensesSum) {
     var plaid = []
-    console.log(expenseCategory, plaidArr, expensesSum)
     Object.keys(expenseCategory).map(key => {
       if (key !== 'created_at' && key !== 'updated_at' && key !== 'user_id' && key !== 'id') {
         if (Number(expenseCategory[key]) > 0)
           expensesSum += Number(expenseCategory[key])
-        console.log(key, expenseCategory[key])
         plaid.push({ name: key, budget: budget[key], expense: expenseCategory[key] })
       }
     })
@@ -63,7 +61,6 @@ export class Expenses extends Component {
   }
   //sums the total money spent on each category of the transactions object from the PLAID API
   objectForChart(transaction, expenseCategory) {
-    console.log(transaction, '***')
     let found = false, val
     transaction.map(obj => {
       if (obj.amount > 0) val = obj.amount
@@ -121,49 +118,56 @@ export class Expenses extends Component {
       //if there is a transaction object, sums up the money spent on each category and convets the object into an array of objects
       const transactionObject = this.objectForChart(transactions, expenseCategory)
       transacArr = this.ArrayforChart(transactionObject, budget.budget, [], 0)
-      console.log(transacArr, )
     }
     // if (budget.budget) // turns the budget object into an array of objects
     //   plaidArr = this.ArrayforChart(budget.budget, [], 0)
     return (
       <div className="expenses">
         <div className="form-container calendar">
-        <div className="expenseheaderwrapper">
-        <h4 className="expensedheader">Set your</h4><Link className="expensedheader linkword" to="/addexpenses"> budget </Link>
-         <h4 className="expensedheader"> and your </h4><a className="expensedheader linkword" onClick={this.props.connectPlaid}>account </a> <h4 className="expensedheader">to compare your monthly spending with your budgeting goal</h4>
-         </div>
-          <h5 id="selecdates">Select transaction dates:</h5>
-          <form className="pure-form" onSubmit={(evt) => this.submitTransactionDate(evt)}>
-            <div className="dates">
-              <div id="startdate">
-                <label for="startDate">Start Date:  </label>
-              </div>
-              <div id="startdateinput">
-                <input className="pure-input-rounded" name="startDate" type="date" />
-              </div>
-              <br />
-              <div id="enddate">
-                <label for="endDate">End Date:  </label>
-              </div>
-              <div id="enddateinput">
+          <div className="expenseheaderwrapper">
+            <h4 className="expensedheader">Set your</h4><Link className="expensedheader linkword" to="/addexpenses"> budget </Link>
+            <h4 className="expensedheader"> and your </h4><a className="expensedheader linkword" onClick={this.props.connectPlaid}>account </a> <h4 className="expensedheader">to compare your monthly spending with your budgeting goal</h4>
+          </div>
+          <div className="form-wrapper">
+            <h5 id="selecdates">Select transaction dates:</h5>
+            <form className="pure-form" onSubmit={(evt) => this.submitTransactionDate(evt)}>
+              <div className="dates">
+               <div className="start-date-wrapper">
+                <div id="startdate">
+                  <label for="startDate">Start Date:  </label>
+                </div>
+                <div id="startdateinput">
+                  <input className="pure-input-rounded" name="startDate" type="date" />
+                </div>
+                </div>
+                <br />
+                <div className="end-date-wrapper">
+                  <div id="enddate">
+                    <label for="endDate">End Date:  </label>
+                  </div>
+                  <div id="enddateinput">
 
-                <input className="pure-input-rounded" name="endDate" type="date" />
+                    <input className="pure-input-rounded" name="endDate" type="date" />
+                  </div>
+                </div>
+                <br />
               </div>
-              <br />
-            </div>
-            <button className="pure-button" id="transacbutton" type="submit" className="btn">Submit</button>
-          </form>
+              <div id="button-wrapper">
+              <button className="pure-button" id="transacbutton" type="submit" className="btn">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
         <div id="chart">
-        {budget.budget !== null && transacArr.length > 0 ?
-          <div>
-            <h4 id="totalexpense">Total Budget: ${sum = this.reducer(budget.budget).toFixed(2)} </h4>
-            <h4 id="totalexpense">Total Expenses: ${expensesSum = this.reducer(expenseCategory).toFixed(2)} </h4>
-            <Chart data={transacArr} />
+          {budget.budget !== null && transacArr.length > 0 ?
+            <div>
+              <h4 id="totalexpense">Total Budget: ${sum = this.reducer(budget.budget).toFixed(2)} </h4>
+              <h4 id="totalexpense">Total Expenses: ${expensesSum = this.reducer(expenseCategory).toFixed(2)} </h4>
+              <Chart data={transacArr} />
 
 
-          </div>
-          : null}</div>
+            </div>
+            : null}</div>
         <DisplayBudget transactions={transactions} budget={budget.budget} />
       </div>
     )

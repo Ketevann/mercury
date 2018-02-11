@@ -10,30 +10,40 @@ class SignupForm extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.state= {signedUp: null}
+    this.state= {signedUp: null, error: null}
   }
 
   handleClick = () => store.dispatch(modalShow())
   handleClose = () => store.dispatch(modalHide())
   handleSubmit(evt) {
     evt.preventDefault()
+    if(evt.target.password.value.length < 6){
+      this.setState({error: "The password needs to be at least 6 character long"})
+    }
+    else {
+      this.setState({error: null})
     this.props.signup(evt.target.email.value, evt.target.password.value, evt.target.name.value)
     this.setState({signedUp: true})
+    }
   }
   render() {
     {console.log('props', this.props)}
     return (
-      <div>
+      <div id="signup-form">
   <form onSubmit={evt => this.handleSubmit(evt)}>
     <input className="credentials" name="name" placeholder="Name" required />
       <br></br>
       <input className="credentials" name="email" placeholder="Email" required />
       <br></br>
-      <input className="credentials" name="password" type="password" placeholder="Password" required />
+      <input onChange={() => this.setState({error: null})} className="credentials" name="password" type="password" placeholder="Password" required />
       <br></br>
         <br></br>
-      <input className="btn" type="submit" value="Sign Up" />
+      <input style={{'background-color': '#53ecd0'}} className="btn" type="submit" value="Sign Up" />
     </form>
+    {this.state.error ?
+      <div
+      className="password-error"
+      style={{color: 'red'}}>{this.state.error}</div> : null}
     {this.state.signedUp === true && this.props.user.auth === ''?
              <div style={{color: 'red'}}>Incorrect Input</div>
              :null}

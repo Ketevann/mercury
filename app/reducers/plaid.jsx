@@ -51,7 +51,6 @@ export const fetchAccessToken = (public_token) =>
 
 export const connectPlaid = () =>
 	dispatch => {
-		console.log('CONNECT PLAID')
 		Plaid.create({
 			apiVersion: 'v2',
 			clientName: 'Mercury',

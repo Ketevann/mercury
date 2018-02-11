@@ -48,11 +48,8 @@ describe('async actions', () => {
         { type: actions.AUTHENTICATED, user: { user: ['currentUser'] } }
       ]
       const store = mockStore({ user: [] })
-
-      console.log(actions.whoami(), ' whoami!!!!!!! function', store.dispatch(actions.whoami()))
       return store.dispatch(actions.whoami())
       .then(() => {
-        console.log(store.getActions(), expectedActions, '****')
         expect(store.getActions()).to.deep.equal(expectedActions)
        })
       .catch(error => console.log('ERROR!!!!', error))

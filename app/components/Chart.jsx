@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
+import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, } from 'recharts';
 const data = [
   { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
   { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
@@ -12,10 +12,8 @@ const data = [
   { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
 ];
 const Chart = (props) => {
-  { console.log(props) }
   return (
     <ResponsiveContainer minHeight={400}>
-
       <BarChart
         layout="vertical"
         width={800} height={400} data={props.data}
@@ -29,10 +27,6 @@ const Chart = (props) => {
         <Bar dataKey="expense" stackId="a" fill="#82ca9d" />
       </BarChart>
     </ResponsiveContainer>
-
-
-
-
 
   );
 }
