@@ -30,7 +30,7 @@ module.exports = {
   },
   module: {
         loaders: [
-      {exclude: ['node_modules|bower_components'], loader:  'babel-loader', test: /\.jsx?$/},
+      {exclude: /(node_modules|bower_components)/, loader:  'babel-loader', test: /\.jsx?$/},
       {loader: 'style-loader!css-loader', test: /\.css$/},
       {loader: 'url-loader', test:  /\.(png|jp(e*)g|svg)$/},
       {loader: 'file-loader', test: /\.(ttf|eot|svg)$/},
