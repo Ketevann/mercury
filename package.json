@@ -104,6 +104,7 @@
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.6.2",
     "victory": "^0.21.5",
+    "webpack-livereload-plugin": "^0.10.0",
     "xoauth2": "^1.2.0"
   },
   "devDependencies": {
