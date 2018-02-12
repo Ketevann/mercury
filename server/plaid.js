@@ -25,8 +25,13 @@ const client = new plaid.Client(
 //   console.log('timer!!!')
 //   res.send('In the timer route!!')
 // })
+
 module.exports = require('express').Router()
 
+  .get('/token', (req, res) =>{
+    res.send({ PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
+      PLAID_ENV: PLAID_ENV})
+  })
   .get('/', function (request, response, next) {
     response.render('index.ejs', {
       PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
@@ -164,16 +169,3 @@ module.exports = require('express').Router()
       })
   })
 
-export const connectPlaid = () =>
-
-		Plaid.create({
-			apiVersion: 'v2',
-			clientName: 'Mercury',
-			env: 'development',
-			product: ['auth'],
-			key: PLAID_PUBLIC_KEY,
-			onSuccess: (public_token) => {
-				dispatch(fetchAccessToken(public_token))
-			},
-			onExit: console.log
-		}).open()

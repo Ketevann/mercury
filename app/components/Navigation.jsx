@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { modalShow } from "../reducers/modal"
 import store from '../store'
 import { logout } from 'APP/app/reducers/auth'
-import { connectPlaid } from '../../server/plaid'
+import { connectPlaid } from '../reducers/plaid'
 import { browserHistory } from 'react-router'
 import { menuShow, setMenuToTrue } from "../reducers/dropdown"
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
@@ -73,7 +73,7 @@ class Navigation extends Component {
                 <Link className="menuicon" id="home" to="/home">Home</Link>
                 </MenuItem>
                 <MenuItem eventKey={3.1}>
-                <a className="menuicon" onClick={connectPlaid}>Connect to My Account</a>
+                <a className="menuicon" onClick={this.props.connectPlaid}>Connect to My Account</a>
                 </MenuItem>
                 <MenuItem eventKey={3.1}>
                 <Link className="menuicon" id="link" to="/emailSettings">Email Settings</Link>
@@ -110,5 +110,5 @@ class Navigation extends Component {
 
 export default connect(
   ({modal, auth, menu, browser }) => ({modal: modal, user: auth, menu: menu, browser: browser }),
-  {modalShow, logout, menuShow, setMenuToTrue },
+  {modalShow, logout, connectPlaid, menuShow, setMenuToTrue },
 )(Navigation)

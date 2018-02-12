@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
-const PLAID_PUBLIC_KEY = require('../../newCredentials.js').PLAID_PUBLIC_KEY
+
 import Promise from 'bluebird'
 const initialPlaidState = {
 	currentUser: {},
 	accessToken: '',
 	transactions: {}
 }
-
+console.log(process.env.NODE_ENV)
 // --------------------------- actions --------------------------
 const GETACCESSTOKEN = 'GET_ACCESSTOKEN'
 const GETTRANSAC = 'GET_TRANSACTIONS'
@@ -49,20 +49,25 @@ export const fetchAccessToken = (public_token) =>
 			.catch(err => console.error('Fetching access token unsuccessful', err))
 	}
 
-// export const connectPlaid = () =>
-// 	dispatch => {
-// 		Plaid.create({
-// 			apiVersion: 'v2',
-// 			clientName: 'Mercury',
-// 			env: 'development',
-// 			product: ['auth'],
-// 			key: PLAID_PUBLIC_KEY,
-// 			onSuccess: (public_token) => {
-// 				dispatch(fetchAccessToken(public_token))
-// 			},
-// 			onExit: console.log
-// 		}).open()
-// 	}
+export const connectPlaid = () =>
+
+	dispatch => {
+		axios.get('/api/plaid/token')
+		.then(res =>{
+			const PLAID_PUBLIC_KEY = res.data.PLAID_PUBLIC_KEY
+		Plaid.create({
+			apiVersion: 'v2',
+			clientName: 'Mercury',
+			env: 'development',
+			product: ['auth'],
+			key: PLAID_PUBLIC_KEY,
+			onSuccess: (public_token) => {
+				dispatch(fetchAccessToken(public_token))
+			},
+			onExit: console.log
+		}).open()
+			})
+	}
 
 export const fetchAccounts = (access_token) =>
 	dispatch =>
