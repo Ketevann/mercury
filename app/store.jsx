@@ -14,8 +14,8 @@ const store = createStore(
   composeWithDevTools(
     responsiveStoreEnhancer,
     applyMiddleware(
-      thunkMiddleware,
-      createLogger({collapsed: true})
+      thunkMiddleware
+     // createLogger({collapsed: true})
     )
   )
 )
