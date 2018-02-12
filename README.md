@@ -1,6 +1,6 @@
 # Mercury
 ## personal budget web App.
-Check out the LIVE  <a href="https://tea-cup.herokuapp.com/">DEMO</a>
+Check out the LIVE  <a href="https://app-mercury.herokuapp.com/">DEMO</a>
 
 
 ### Features
