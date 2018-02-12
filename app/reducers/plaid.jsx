@@ -49,20 +49,20 @@ export const fetchAccessToken = (public_token) =>
 			.catch(err => console.error('Fetching access token unsuccessful', err))
 	}
 
-export const connectPlaid = () =>
-	dispatch => {
-		Plaid.create({
-			apiVersion: 'v2',
-			clientName: 'Mercury',
-			env: 'development',
-			product: ['auth'],
-			key: PLAID_PUBLIC_KEY,
-			onSuccess: (public_token) => {
-				dispatch(fetchAccessToken(public_token))
-			},
-			onExit: console.log
-		}).open()
-	}
+// export const connectPlaid = () =>
+// 	dispatch => {
+// 		Plaid.create({
+// 			apiVersion: 'v2',
+// 			clientName: 'Mercury',
+// 			env: 'development',
+// 			product: ['auth'],
+// 			key: PLAID_PUBLIC_KEY,
+// 			onSuccess: (public_token) => {
+// 				dispatch(fetchAccessToken(public_token))
+// 			},
+// 			onExit: console.log
+// 		}).open()
+// 	}
 
 export const fetchAccounts = (access_token) =>
 	dispatch =>
