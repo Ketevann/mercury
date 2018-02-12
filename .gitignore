@@ -15,6 +15,7 @@ npm-debug.log
 newCredentials.js
 mercury.js
 giffy.js
+.env
 
 .DS_Store
 
