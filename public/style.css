@@ -1081,3 +1081,20 @@ div#button-wrapper {
 .end-date-wrapper {
     margin-left: 3px;
 }
+
+div#no-transac-error {
+    text-align: x;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: red;
+}
+.total-expense{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.password-error {
+    text-align: center;
+    margin-top: 10px;
+}

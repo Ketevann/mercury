@@ -152,6 +152,7 @@ module.exports = require('express').Router()
           response.json(transactionsResponse)
         })
       })
+      .catch(err => response.send({error: 'Fetching transactions failed'}))
   })
 
   .post('/putTokenInDB', (req, res, next) => {

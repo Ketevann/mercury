@@ -7,30 +7,16 @@ const AccessToken = db.model('accessToken');
 
 // need to add FindUser in case user exists
 module.exports = require('express').Router()
-  .post('/', (req, res, next) => {
-    Expenses.create(req.body)
-      .then(expenses => {
-        req.user.setExpense(expenses.id)
-          .then(() => {
-            AccessToken.findAll({
-              include: [
-                {
-                  model: User, include: [
-                    { model: Expenses }
-                  ]
-                }
-              ]
-            }
-            )
-            .then(toke =>{
-              JSON.parse(JSON.stringify(toke))
-              res.send(JSON.parse(JSON.stringify(toke)))
-            })
-
-          })
+ .post('/', (req, res, next) => {
+  Expenses.create(req.body)
+  .then(expenses => {
+    req.user.setExpense(expenses.id)
+      .then(() => {
+        res.send(expenses)
       })
-      .catch(next)
   })
+     .catch(next)
+})
   .get('/', (req, res, next) => {
     if (req.user) {
       return User.findOne({

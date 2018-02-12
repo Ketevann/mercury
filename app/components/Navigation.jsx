@@ -11,6 +11,7 @@ import { browserHistory } from 'react-router'
 import { menuShow, setMenuToTrue } from "../reducers/dropdown"
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
 
+import { cancelButtonPress, buttonPress } from '../reducers/login'
 
 
 
@@ -95,7 +96,11 @@ class Navigation extends Component {
               <Nav pullRight className="right">
                 <NavItem eventKey={2} href="#">
 
-                  <Link className="menuicon" href="#" onClick={() => store.dispatch(this.props.modalShow())}> Login / Sign Up </Link>
+                  <Link className="menuicon" href="#" onClick={() =>{
+                     store.dispatch(this.props.modalShow())
+                     store.dispatch(this.props.cancelButtonPress())
+                  }
+                  }> Login / Sign Up </Link>
                 </NavItem>
               </Nav>}
           </Nav>
@@ -110,5 +115,5 @@ class Navigation extends Component {
 
 export default connect(
   ({modal, auth, menu, browser }) => ({modal: modal, user: auth, menu: menu, browser: browser }),
-  {modalShow, logout, connectPlaid, menuShow, setMenuToTrue },
+  {modalShow, logout, connectPlaid, menuShow, setMenuToTrue, cancelButtonPress },
 )(Navigation)

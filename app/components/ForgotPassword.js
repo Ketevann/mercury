@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { forgotPassword, forgotPasswordBoolFalse } from '../reducers/forgot'
+import { buttonPress } from '../reducers/login'
 import store from '../store'
 import Modal from 'react-modal'
 
@@ -48,6 +49,7 @@ class ForgotPassword extends React.Component {
               this.props.forgotPassword(evt.target.email.value)
               store.dispatch(forgotPasswordBoolFalse())
               this.setState({sent: "The password reset link has be sent to your email"})
+
               this.openModal()
             }}>
             <h3 className="form-signin-heading">Please Enter Your Email</h3>

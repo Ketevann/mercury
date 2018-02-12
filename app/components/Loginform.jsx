@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { forgotDisplay } from '../reducers/login'
+import { forgotDisplay, buttonPress } from '../reducers/login'
 import { login } from 'APP/app/reducers/auth'
 import store from '../store'
 
@@ -28,6 +28,7 @@ export class LoginForm extends React.Component {
 
     this.props.login(email, password)
     this.setState({ logged: true })
+    store.dispatch(buttonPress())
 
   }
   onForgotEnter(){

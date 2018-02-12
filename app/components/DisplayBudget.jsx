@@ -4,6 +4,7 @@ import TransactionsTable from './TransactionsTable'
 
 
 const DisplayBudget = (props) => {
+
   return (
     <div className="expense">
       {props.budget ?
