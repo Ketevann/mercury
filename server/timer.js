@@ -24,10 +24,11 @@ const client = new plaid.Client(
 
 var sendOutNotification = () => {
 
-  console.log('This runs every 5 minutes');
+  //find all accounts
   AccessToken.findAll({
     include: [
       {
+        //include asscoiated users and their budget
         model: User, include: [
           { model: Expenses }
         ]
@@ -37,54 +38,44 @@ var sendOutNotification = () => {
 
   ).then((tokens) => {
     asyncLoop(tokens, function (token, next) {
-       console.log(JSON.parse(JSON.stringify(token)).user, 'TOKKEN')
       var sringified = JSON.parse(JSON.stringify(token))
-
       var createdAt = sringified.user.expense.created_at
       console.log(createdAt, 'date');
       date = createdAt.slice(0, 10)
+      //get the day of when the budget was set
       var day = date.slice(8, 10)
-
+      //get current Date
       var currentDate = new Date();
       var PreviusMonth = new Date();
-            console.log(date, 'date', currentDate, PreviusMonth);
-
-
-      currentDate.setDate(day)
+      //set the day to the same day when the budget was set
+     currentDate.setDate(day)
+      //get previous month
       PreviusMonth.setMonth(PreviusMonth.getMonth() - 1)
-      PreviusMonth.setDate(day)
-      console.log(currentDate, PreviusMonth,  new Date(createdAt) )
-       console.log(Math.abs(currentDate - PreviusMonth )< Math.abs(currentDate - new Date(createdAt) ), new Date(createdAt) )
-
-
+      //set the day to the same day when the budget was set
+      PreviusMonth.setDate(day)    
+      //convert dates to yyyy-dd-mm format
       currentDate2 = currentDate.toISOString().split('T')[0]
       PreviusMonth2 = PreviusMonth.toISOString().split('T')[0]
-var rule = {}
+      var rule = {}
 
-rule.month = 2;
-rule.dayOfMonth = 10
-rule.hour = 16;
-rule.minute = 25;
+
 
 let updateDay = day
  if (day[0] === '0') updateDay = day[1];
+ //user email
 let email = token.user.email
 rule.day = updateDay
-console.log(updateDay, ' updateDAyy', email)
-var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
-//var job = schedule.scheduleJob({dayOfMonth: [1,2,3,4,5,6,7]}, function(){
-
-      //  PreviusMonth.setDate(day)
-      //  PreviusMonth.setMonth(d.getMonth() - 1)
+//var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
+rule.month = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+rule.dayOfMonth = updateDay
+rule.hour = 16;
+rule.minute = 25;
+      
 
       if (Math.abs(currentDate - PreviusMonth ) < Math.abs(currentDate - new Date(createdAt) )) {
-        console.log('less !!!!!!!!----------------------------------->')
-     var scheduleDate = new Date(2018, 02, 10, 18, 56, 30);
+    // var scheduleDate = new Date(2018, 02, 10, 18, 56, 30);
 
-      var j = schedule.scheduleJob({hour: 16, minute: 54, dayOfMonth: updateDay}, function () {
-       //var j = schedule.scheduleJob('37 19 10 2 *', function () {
-
-      console.log('PreviusMonth', PreviusMonth, ' currentDate', currentDate)
+      var j = schedule.scheduleJob(rule, function () {
       client.getTransactions(token.accessToken, PreviusMonth2, currentDate2, {
         count: 250,
         offset: 0,
@@ -106,11 +97,9 @@ var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
           var budgetStr = (budget >= totalSum) ? `${token.user.name} was under budget!` : `${token.user.name} was over budget!`
         }
         else {
-          var budgetStr = '';
-        }
+          var budgetStr = '';        }
 
-        //console.log('Transactions:',transactionsResponse)
-        //console.log('pulled ' + transactionsResponse.transactions.length + ' transactions')
+       
         if (token.user.prodUpdates === 'ON' && token.user.thing !== null) {
           console.log('not null');
           var total = transactionsResponse.transactions.reduce((total, val) => {
@@ -118,22 +107,14 @@ var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
               return total + val.amount;
             else return total
           }, 0)
-          console.log('total!', token.user.thing, total, token.user.amount)
           var message = (total < token.user.amount) ? `${token.user.name} did not overspend on ${token.user.thing}!` : `${token.user.name} overspent on ${token.user.thing}!`
           keyword = token.user.thing;
-          console.log('KEYYY', keyword)
         }
         else {
           var message = ''
         }
         if (keyword === '' && token.user.budgetUpdates === 'ON')
-          keyword = (budget >= totalSum) ? 'success' : 'failure'
-        //console.log(total,typeof total);
-        //console.log(total, token[0].user.thing )
-        //var message = (total<token[0].user.amount) ? `${token[0].user.name} was successful!` : `${token[0].user.name} was unsuccessful!`
-        //var second = `${token[0].user.name} spent ${total} on ${token[0].user.thing} - goal was ${token[0].user.amount}`
-        //var fin = message + " "+second;
-        console.log("meessage:", message, "keyword", keyword, '************', email)
+          keyword = (budget >= totalSum) ? 'success' : 'failure'   
         var totalMessage = budgetStr + ' ' + message
         if (totalMessage !== " ") {
           let transporter = nodemailer.createTransport({
@@ -145,22 +126,9 @@ var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
               user: 'mercurybudget@gmail.com',
               pass: 'isteamgoodwith'
             }
-          })
-
-          // setup email data with unicode symbols
-          // let mailOptions = {
-          //   from: '"Fred Foo bread junior 👻" <*****@gmail.com>', // sender address
-          //   to: 'ninbaratwli@gmail.com', // list of receivers
-          //   subject: 'Hello ✔', // Subject line
-          //   text: 'got bread ?', // plain text body
-          //   html: '<b>got bread  ?</b>' // html body
-          // }
-          //console.log('to pass:',token[0].user.thing )
+          })         
           giphy.search(keyword) // 'flamingo is a keyword to search for
             .then(function (data) {
-              // Res contains gif data!
-              //console.log('found a gif!!!')
-              //console.log('HAS A THING??',data.data[0])
               var length = data.data.length;
               var chosen = data.data[Math.floor(length * Math.random())]
               var mailOptions = {
@@ -179,11 +147,8 @@ var myRule = {hour: 4, minute: 0, dayOfMonth: 6, month: 2};
               transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                   return console.log(error);
-                }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-                /*req.end()
-                transporter.close()
-                res.send('WHYYYYYY')*/
+                }                console.log('Message %s sent: %s', info.messageId, info.response);
+                
               }) //closes sendmail
             }).catch((error) => console.log(error)) //closes giphy
         }//closes if total message is not null
